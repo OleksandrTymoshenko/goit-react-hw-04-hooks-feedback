@@ -2,30 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './style.module.css';
 
-const Statistic = (props) => {
-
-  const paramsName = Object.keys(props.params)
+function Statistic(props) {
 
   return (
     <div className={styles.statistic}>
-      {paramsName.map((paramName, index) => 
+      {props.params.map((paramName, index) => 
         <label 
           key={index} 
           className={styles.label}>
-            {paramName}: <span>{props.params[paramName]}</span>
+            {paramName}: <span>{props[paramName]}</span>
         </label>)}
+      <div>
+        PositiveFeedback: {Math.round(props.positiveFeedBack)} %
+      </div>
     </div>
   );
 };
 
 Statistic.propTypes = {
-  params: PropTypes.shape({
-    good: PropTypes.number,
-    neutral: PropTypes.number,
-    bad: PropTypes.number,
-    total: PropTypes.number,
-    positiveFeedBack: PropTypes.any,
-  })
+  params: PropTypes.array
 };
 
 export default Statistic;

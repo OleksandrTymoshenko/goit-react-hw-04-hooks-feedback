@@ -9,48 +9,49 @@ export default function App() {
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
   const [total, setTotal] = useState(0);
-  const [positiveFeedBack, setPositiveFeedBack] = useState(0);
   const incrementValue = (param) => {
     switch (param) {
       case 'good':
-        setGood ((prevState) => prevState + 1)
+        setGood((prevState) => prevState + 1)
+        setTotal((prevState) => prevState + 1);
         break;
       case 'neutral':
-        setNeutral ((prevState) => prevState + 1)
+        setNeutral((prevState) => prevState + 1)
+        setTotal((prevState) => prevState + 1);
         
         break;
       case 'bad':
-        setBad ((prevState) => prevState + 1)
+        setBad((prevState) => prevState + 1)
+        setTotal((prevState) => prevState + 1);
         break;
     
       default:
         break;
     }
   }
-    
-  const countTotalFeedback = () => {
-    setTotal(good + neutral + bad);
+
 
     const countPositiveFeedbackPercentage = () => {
-      setPositiveFeedBack((good / total) * 100)
+      return (good / total) * 100
     }
-      return (
+  return (
+        
         <div>
           <Section title="Please leave feedback">
             <Control
               incrementValue={incrementValue}
-              params={['good', 'neutral', 'bad', 'total', 'positiveFeedBack']}
+              params={["good", "neutral", "bad"]}
             />
           </Section>
-          {total ? (
+          {good || neutral || bad ? (
             <Section title="Statistics">
               <Statistic
-                params={['good', 'neutral', 'bad']} 
+                params={['good', 'neutral', 'bad', "total"]}
                 good={good}
                 neutral={neutral}
                 bad={bad}
                 total={total}
-                positiveFeedBack={positiveFeedBack}
+                positiveFeedBack={countPositiveFeedbackPercentage({good, neutral, bad})}
               />
             </Section>
           ) : (
@@ -58,5 +59,4 @@ export default function App() {
           )}
         </div>
       );
-    }
   }
